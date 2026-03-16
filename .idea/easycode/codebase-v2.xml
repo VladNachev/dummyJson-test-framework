@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/src/main/java/org/example/Main.java;C:/Users/nache/IdeaProjects/skillo_practice/SK_01_BE_API/src/test/java/API_Playgraund/admin_flow.java;C:/Users/nache/IdeaProjects/skillo_practice/SK_01_BE_API/src/test/java/API_Playgraund/anon_flow.java;C:/Users/nache/IdeaProjects/skillo_practice/SK_01_BE_API/src/test/java/API_Playgraund/RestUtils.java;C:/Users/nache/IdeaProjects/skillo_practice/SK_01_BE_API/src/test/java/API_Playgraund/user_flow.java;C:/Users/nache/IdeaProjects/skillo_practice/SK_01_BE_API/src/test/java/Automation_Exercise/automationexerciseTest.java;C:/Users/nache/IdeaProjects/skillo_practice/SK_01_BE_API/src/test/java/Automation_Exercise/get_product_list.java;C:/Users/nache/IdeaProjects/skillo_practice/SK_01_BE_API/src/test/java/Automation_Exercise/post_search.java" />
+  </component>
+</project>
