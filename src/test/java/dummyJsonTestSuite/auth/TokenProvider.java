@@ -1,5 +1,7 @@
 package dummyJsonTestSuite.auth;
 
+import dummyJsonTestSuite.config.DummyJsonConfig;
+import dummyJsonTestSuite.enums.ValidationMessages;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
@@ -20,16 +22,16 @@ public final class TokenProvider {
 
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                "/auth/login",
-                "POST",
+                DummyJsonConfig.LOGIN_ENDPOINT,
+                DummyJsonConfig.POST,
                 DummyJsonConfig.jsonHeaders(),
                 requestBody);
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
         String accessToken = response.jsonPath().getString("accessToken");
-        Assert.assertNotNull(accessToken, "Login response should contain accessToken.");
-        Assert.assertFalse(accessToken.isBlank(), "Access token should not be blank.");
+        Assert.assertNotNull(accessToken, ValidationMessages.LOGIN_RESPONSE_SHOULD_CONTAIN_ACCESS_TOKEN.getMessage());
+        Assert.assertFalse(accessToken.isBlank(), ValidationMessages.ACCESS_TOKEN_SHOULD_NOT_BE_BLANK.getMessage());
         return accessToken;
     }
 }

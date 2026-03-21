@@ -14,7 +14,7 @@ public final class DummyJsonRestUtils {
         response.then().statusCode(statusCode);
     }
 
-    public static Response sendRequest(String baseUrl, String endpoint, String method, Map<String, String> headers, String body) {
+    public static Response sendRequest(String baseUrl, String endpoint, String method, Map<String, String> headers, Object body) {
         switch (method.toUpperCase()) {
             case "GET":
                 return given()
