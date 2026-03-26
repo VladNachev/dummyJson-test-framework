@@ -2,6 +2,7 @@ package dummyjsontestsuite.auth;
 
 import dummyjsontestsuite.config.DummyJsonConfig;
 import dummyjsontestsuite.enums.ValidationMessages;
+import dummyjsontestsuite.utils.DummyJsonRestUtils;
 import io.restassured.response.Response;
 import org.testng.Assert;
 

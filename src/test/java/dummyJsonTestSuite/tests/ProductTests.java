@@ -1,12 +1,12 @@
 package dummyjsontestsuite.tests;
 
-import dummyjsontestsuite.auth.DummyJsonRestUtils;
 import dummyjsontestsuite.auth.TokenProvider;
 import dummyjsontestsuite.config.DummyJsonConfig;
 import dummyjsontestsuite.dto.ProductRequestDTO;
 import dummyjsontestsuite.dto.ProductDTO;
 import dummyjsontestsuite.enums.ProductCatalog;
 import dummyjsontestsuite.enums.ValidationMessages;
+import dummyjsontestsuite.utils.DummyJsonRestUtils;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
