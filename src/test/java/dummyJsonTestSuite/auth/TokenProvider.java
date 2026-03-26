@@ -1,7 +1,7 @@
-package dummyJsonTestSuite.auth;
+package dummyjsontestsuite.auth;
 
-import dummyJsonTestSuite.config.DummyJsonConfig;
-import dummyJsonTestSuite.enums.ValidationMessages;
+import dummyjsontestsuite.config.DummyJsonConfig;
+import dummyjsontestsuite.enums.ValidationMessages;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
@@ -25,7 +25,8 @@ public final class TokenProvider {
                 DummyJsonConfig.LOGIN_ENDPOINT,
                 DummyJsonConfig.POST,
                 DummyJsonConfig.jsonHeaders(),
-                requestBody);
+                requestBody
+        );
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 

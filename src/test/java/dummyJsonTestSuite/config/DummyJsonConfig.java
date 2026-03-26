@@ -1,23 +1,18 @@
-package dummyJsonTestSuite.config;
+package dummyjsontestsuite.config;
 
 import java.util.Map;
 
 public final class DummyJsonConfig {
-
-    // URLs
     public static final String BASE_URL = "https://dummyjson.com";
 
-    // endpoints
     public static final String LOGIN_ENDPOINT = "/auth/login";
     public static final String PRODUCTS_ENDPOINT = "/products";
 
-    // verbs
     public static final String POST = "POST";
     public static final String GET = "GET";
     public static final String PUT = "PUT";
-    public static final String DELETE = "DELETTE";
+    public static final String DELETE = "DELETE";
 
-    // credentials
     public static final String USERNAME = "emilys";
     public static final String PASSWORD = "emilyspass";
 

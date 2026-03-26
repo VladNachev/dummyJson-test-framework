@@ -1,4 +1,4 @@
-package dummyJsonTestSuite.enums;
+package dummyjsontestsuite.enums;
 
 public enum ValidationMessages {
     ACCESS_TOKEN_SHOULD_BE_RETURNED("Access token should be returned."),

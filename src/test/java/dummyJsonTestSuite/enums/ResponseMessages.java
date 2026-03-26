@@ -1,4 +1,4 @@
-package dummyJsonTestSuite.enums;
+package dummyjsontestsuite.enums;
 
 public enum ResponseMessages {
     LOGIN_SUCCESS("Login successful. Access token received."),

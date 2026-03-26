@@ -1,12 +1,12 @@
-package dummyJsonTestSuite.products;
+package dummyjsontestsuite.tests;
 
-import dummyJsonTestSuite.auth.DummyJsonRestUtils;
-import dummyJsonTestSuite.auth.TokenProvider;
-import dummyJsonTestSuite.config.DummyJsonConfig;
-import dummyJsonTestSuite.dto.ProductRequestDTO;
-import dummyJsonTestSuite.dto.ProductDTO;
-import dummyJsonTestSuite.enums.ProductCatalog;
-import dummyJsonTestSuite.enums.ValidationMessages;
+import dummyjsontestsuite.auth.DummyJsonRestUtils;
+import dummyjsontestsuite.auth.TokenProvider;
+import dummyjsontestsuite.config.DummyJsonConfig;
+import dummyjsontestsuite.dto.ProductRequestDTO;
+import dummyjsontestsuite.dto.ProductDTO;
+import dummyjsontestsuite.enums.ProductCatalog;
+import dummyjsontestsuite.enums.ValidationMessages;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,6 +19,8 @@ public class ProductTests {
     private String accessToken = TokenProvider.getAccessToken();
     private static final ProductCatalog EXPECTED_PRODUCT = ProductCatalog.ESSENCE_MASCARA_LASH_PRINCESS;
     private static final ProductDTO EXPECTED_PRODUCT_DTO = EXPECTED_PRODUCT.getProduct();
+    private static final ProductCatalog SEARCH_EXPECTED_PRODUCT = ProductCatalog.EYESHADOW_PALETTE_WITH_MIRROR;
+    private static final ProductDTO SEARCH_EXPECTED_PRODUCT_DTO = SEARCH_EXPECTED_PRODUCT.getProduct();
 
     @Test
     public void getAllProductsShouldReturnNonEmptyProductList() {
@@ -81,7 +83,7 @@ public class ProductTests {
 
         List<Map<String, Object>> products = response.jsonPath().getList("products");
         Assert.assertEquals(products.size(), 1, ValidationMessages.PRODUCT_EXACTLY_ONE_PRODUCT_RETURNED.getMessage());
-        Assert.assertEquals(products.get(0).get("title"), EXPECTED_PRODUCT_DTO.getTitle());
+        Assert.assertEquals(products.get(0).get("title"), SEARCH_EXPECTED_PRODUCT_DTO.getTitle());
     }
 
     @Test

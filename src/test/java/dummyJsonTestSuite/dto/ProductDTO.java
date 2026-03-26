@@ -1,4 +1,4 @@
-package dummyJsonTestSuite.dto;
+package dummyjsontestsuite.dto;
 
 public class ProductDTO {
     private final String title;

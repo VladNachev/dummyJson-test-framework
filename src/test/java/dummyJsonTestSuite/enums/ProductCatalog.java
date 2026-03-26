@@ -1,19 +1,19 @@
-package dummyJsonTestSuite.enums;
+package dummyjsontestsuite.enums;
 
-import dummyJsonTestSuite.dto.ProductDTO;
+import dummyjsontestsuite.dto.ProductDTO;
 
 public enum ProductCatalog {
     ESSENCE_MASCARA_LASH_PRINCESS(
             1,
-            "RCH45Q1A",
+            "BEA-ESS-ESS-001",
             new ProductDTO(
                     "Essence Mascara Lash Princess",
                     "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
                     "beauty",
                     9.99,
-                    7.17,
-                    4.94,
-                    5,
+                    10.48,
+                    2.56,
+                    99,
                     "Essence"
             )
     ),

@@ -1,4 +1,4 @@
-package dummyJsonTestSuite.auth;
+package dummyjsontestsuite.auth;
 
 import io.restassured.response.Response;
 

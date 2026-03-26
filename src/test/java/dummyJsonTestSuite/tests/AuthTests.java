@@ -1,6 +1,7 @@
-package dummyJsonTestSuite.auth;
+package dummyjsontestsuite.tests;
 
-import dummyJsonTestSuite.enums.ValidationMessages;
+import dummyjsontestsuite.auth.TokenProvider;
+import dummyjsontestsuite.enums.ValidationMessages;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
