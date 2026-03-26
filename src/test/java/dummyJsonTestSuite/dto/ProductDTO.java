@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDTO {
+    private int id;
     private String title;
     private String description;
     private String category;
@@ -12,11 +13,13 @@ public class ProductDTO {
     private double rating;
     private int stock;
     private String brand;
+    private String sku;
 
     public ProductDTO() {
     }
 
     public ProductDTO(
+            int id,
             String title,
             String description,
             String category,
@@ -24,8 +27,10 @@ public class ProductDTO {
             double discountPercentage,
             double rating,
             int stock,
-            String brand
+            String brand,
+            String sku
     ) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.category = category;
@@ -34,6 +39,15 @@ public class ProductDTO {
         this.rating = rating;
         this.stock = stock;
         this.brand = brand;
+        this.sku = sku;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -98,5 +112,13 @@ public class ProductDTO {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }

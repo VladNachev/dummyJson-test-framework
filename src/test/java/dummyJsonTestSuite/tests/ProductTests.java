@@ -3,6 +3,7 @@ package dummyjsontestsuite.tests;
 import dummyjsontestsuite.config.DummyJsonConfig;
 import dummyjsontestsuite.dto.ProductRequestDTO;
 import dummyjsontestsuite.dto.ProductDTO;
+import dummyjsontestsuite.dto.ProductsResponseDTO;
 import dummyjsontestsuite.enums.ProductCatalog;
 import dummyjsontestsuite.enums.ValidationMessages;
 import dummyjsontestsuite.utils.DummyJsonRestUtils;
@@ -10,9 +11,6 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.util.List;
-import java.util.Map;
 
 public class ProductTests extends BaseTest {
     private static final ProductCatalog EXPECTED_PRODUCT = ProductCatalog.ESSENCE_MASCARA_LASH_PRINCESS;
@@ -32,23 +30,23 @@ public class ProductTests extends BaseTest {
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
-        List<Map<String, Object>> products = response.jsonPath().getList("products");
-        Assert.assertNotNull(products, ValidationMessages.PRODUCTS_LIST_SHOULD_BE_PRESENT.getMessage());
-        Assert.assertFalse(products.isEmpty(), ValidationMessages.PRODUCTS_LIST_SHOULD_NOT_BE_EMPTY.getMessage());
+        ProductsResponseDTO productsResponse = response.as(ProductsResponseDTO.class);
+        Assert.assertNotNull(productsResponse.getProducts(), ValidationMessages.PRODUCTS_LIST_SHOULD_BE_PRESENT.getMessage());
+        Assert.assertFalse(productsResponse.getProducts().isEmpty(), ValidationMessages.PRODUCTS_LIST_SHOULD_NOT_BE_EMPTY.getMessage());
 
-        Map<String, Object> firstProduct = products.get(0);
+        ProductDTO firstProduct = productsResponse.getProducts().get(0);
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(((Number) firstProduct.get("id")).intValue(), EXPECTED_PRODUCT.getId(), ValidationMessages.PRODUCT_ID_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(firstProduct.get("title"), EXPECTED_PRODUCT_DTO.getTitle(), ValidationMessages.PRODUCT_TITLE_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(firstProduct.get("description"), EXPECTED_PRODUCT_DTO.getDescription(), ValidationMessages.PRODUCT_DESCRIPTION_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(firstProduct.get("category"), EXPECTED_PRODUCT_DTO.getCategory(), ValidationMessages.PRODUCT_CATEGORY_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(((Number) firstProduct.get("price")).doubleValue(), EXPECTED_PRODUCT_DTO.getPrice(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_PRICE_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(((Number) firstProduct.get("discountPercentage")).doubleValue(), EXPECTED_PRODUCT_DTO.getDiscountPercentage(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_DISCOUNT_PERCENTAGE_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(((Number) firstProduct.get("rating")).doubleValue(), EXPECTED_PRODUCT_DTO.getRating(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_RATING_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(((Number) firstProduct.get("stock")).intValue(), EXPECTED_PRODUCT_DTO.getStock(), ValidationMessages.PRODUCT_STOCK_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(firstProduct.get("brand"), EXPECTED_PRODUCT_DTO.getBrand(), ValidationMessages.PRODUCT_BRAND_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(firstProduct.get("sku"), EXPECTED_PRODUCT.getSku(), ValidationMessages.PRODUCT_SKU_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getId(), EXPECTED_PRODUCT_DTO.getId(), ValidationMessages.PRODUCT_ID_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getTitle(), EXPECTED_PRODUCT_DTO.getTitle(), ValidationMessages.PRODUCT_TITLE_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getDescription(), EXPECTED_PRODUCT_DTO.getDescription(), ValidationMessages.PRODUCT_DESCRIPTION_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getCategory(), EXPECTED_PRODUCT_DTO.getCategory(), ValidationMessages.PRODUCT_CATEGORY_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getPrice(), EXPECTED_PRODUCT_DTO.getPrice(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_PRICE_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getDiscountPercentage(), EXPECTED_PRODUCT_DTO.getDiscountPercentage(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_DISCOUNT_PERCENTAGE_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getRating(), EXPECTED_PRODUCT_DTO.getRating(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_RATING_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getStock(), EXPECTED_PRODUCT_DTO.getStock(), ValidationMessages.PRODUCT_STOCK_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getBrand(), EXPECTED_PRODUCT_DTO.getBrand(), ValidationMessages.PRODUCT_BRAND_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(firstProduct.getSku(), EXPECTED_PRODUCT_DTO.getSku(), ValidationMessages.PRODUCT_SKU_SHOULD_MATCH.getMessage());
 
         softAssert.assertAll();
     }
@@ -69,7 +67,7 @@ public class ProductTests extends BaseTest {
         ProductDTO productDTO = response.as(ProductDTO.class);
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(response.jsonPath().getInt("id"), EXPECTED_PRODUCT.getId(), ValidationMessages.PRODUCT_ID_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getId(), EXPECTED_PRODUCT_DTO.getId(), ValidationMessages.PRODUCT_ID_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(productDTO.getTitle(), EXPECTED_PRODUCT_DTO.getTitle(), ValidationMessages.PRODUCT_TITLE_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(productDTO.getDescription(), EXPECTED_PRODUCT_DTO.getDescription(), ValidationMessages.PRODUCT_DESCRIPTION_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(productDTO.getCategory(), EXPECTED_PRODUCT_DTO.getCategory(), ValidationMessages.PRODUCT_CATEGORY_SHOULD_MATCH.getMessage());
@@ -78,6 +76,7 @@ public class ProductTests extends BaseTest {
         softAssert.assertEquals(productDTO.getRating(), EXPECTED_PRODUCT_DTO.getRating(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_RATING_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(productDTO.getStock(), EXPECTED_PRODUCT_DTO.getStock(), ValidationMessages.PRODUCT_STOCK_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(productDTO.getBrand(), EXPECTED_PRODUCT_DTO.getBrand(), ValidationMessages.PRODUCT_BRAND_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getSku(), EXPECTED_PRODUCT_DTO.getSku(), ValidationMessages.PRODUCT_SKU_SHOULD_MATCH.getMessage());
 
         softAssert.assertAll();
     }
@@ -95,9 +94,9 @@ public class ProductTests extends BaseTest {
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
-        List<Map<String, Object>> products = response.jsonPath().getList("products");
-        Assert.assertEquals(products.size(), 1, ValidationMessages.PRODUCT_EXACTLY_ONE_PRODUCT_RETURNED.getMessage());
-        Assert.assertEquals(products.get(0).get("title"), SEARCH_EXPECTED_PRODUCT_DTO.getTitle());
+        ProductsResponseDTO productsResponse = response.as(ProductsResponseDTO.class);
+        Assert.assertEquals(productsResponse.getProducts().size(), 1, ValidationMessages.PRODUCT_EXACTLY_ONE_PRODUCT_RETURNED.getMessage());
+        Assert.assertEquals(productsResponse.getProducts().get(0).getTitle(), SEARCH_EXPECTED_PRODUCT_DTO.getTitle(), ValidationMessages.PRODUCT_TITLE_SHOULD_MATCH.getMessage());
     }
 
     @Test

@@ -98,6 +98,7 @@ public enum UsersList {
         this.eyeColor = eyeColor;
         this.role = role;
         this.user = new UserDTO(
+                id,
                 firstName,
                 lastName,
                 maidenName,

@@ -7,6 +7,7 @@ public enum ProductCatalog {
             1,
             "BEA-ESS-ESS-001",
             new ProductDTO(
+                    1,
                     "Essence Mascara Lash Princess",
                     "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
                     "beauty",
@@ -14,13 +15,15 @@ public enum ProductCatalog {
                     10.48,
                     2.56,
                     99,
-                    "Essence"
+                    "Essence",
+                    "BEA-ESS-ESS-001"
             )
     ),
     EYESHADOW_PALETTE_WITH_MIRROR(
             2,
             "BEA-GLA-EYE-002",
             new ProductDTO(
+                    2,
                     "Eyeshadow Palette with Mirror",
                     "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
                     "beauty",
@@ -28,13 +31,15 @@ public enum ProductCatalog {
                     18.19,
                     2.86,
                     34,
-                    "Glamour Beauty"
+                    "Glamour Beauty",
+                    "BEA-GLA-EYE-002"
             )
     ),
     POWDER_CANISTER(
             3,
             "BEA-VEL-POW-003",
             new ProductDTO(
+                    3,
                     "Powder Canister",
                     "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
                     "beauty",
@@ -42,7 +47,8 @@ public enum ProductCatalog {
                     9.84,
                     4.64,
                     89,
-                    "Velvet Touch"
+                    "Velvet Touch",
+                    "BEA-VEL-POW-003"
             )
     );
 

@@ -1,9 +1,11 @@
 package dummyjsontestsuite.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
+    private int id;
     private String firstName;
     private String lastName;
     private String maidenName;
@@ -20,11 +22,14 @@ public class UserDTO {
     private double weight;
     private String eyeColor;
     private String role;
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
 
     public UserDTO() {
     }
 
     public UserDTO(
+            int id,
             String firstName,
             String lastName,
             String maidenName,
@@ -42,6 +47,7 @@ public class UserDTO {
             String eyeColor,
             String role
     ) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.maidenName = maidenName;
@@ -58,6 +64,14 @@ public class UserDTO {
         this.weight = weight;
         this.eyeColor = eyeColor;
         this.role = role;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -186,5 +200,14 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    @JsonProperty("isDeleted")
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

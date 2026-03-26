@@ -3,6 +3,7 @@ package dummyjsontestsuite.tests;
 import dummyjsontestsuite.config.DummyJsonConfig;
 import dummyjsontestsuite.dto.UserDTO;
 import dummyjsontestsuite.dto.UserRequestDTO;
+import dummyjsontestsuite.dto.UsersResponseDTO;
 import dummyjsontestsuite.enums.ValidationMessages;
 import dummyjsontestsuite.enums.UsersList;
 import dummyjsontestsuite.utils.DummyJsonRestUtils;
@@ -10,9 +11,6 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.util.List;
-import java.util.Map;
 
 public class UserTests extends BaseTest {
     private static final UsersList TEST_USER = UsersList.EMILY_JOHNSON;
@@ -66,11 +64,11 @@ public class UserTests extends BaseTest {
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
-        List<UserDTO> users = response.jsonPath().getList("users", UserDTO.class);
-        Assert.assertNotNull(users, ValidationMessages.USERS_LIST_SHOULD_BE_PRESENT.getMessage());
-        Assert.assertFalse(users.isEmpty(), ValidationMessages.USERS_LIST_SHOULD_NOT_BE_EMPTY.getMessage());
+        UsersResponseDTO usersResponse = response.as(UsersResponseDTO.class);
+        Assert.assertNotNull(usersResponse.getUsers(), ValidationMessages.USERS_LIST_SHOULD_BE_PRESENT.getMessage());
+        Assert.assertFalse(usersResponse.getUsers().isEmpty(), ValidationMessages.USERS_LIST_SHOULD_NOT_BE_EMPTY.getMessage());
 
-        UserDTO firstUser = users.get(0);
+        UserDTO firstUser = usersResponse.getUsers().get(0);
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertEquals(firstUser.getFirstName(), TEST_USER_DTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
@@ -105,9 +103,9 @@ public class UserTests extends BaseTest {
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
-        List<Map<String, Object>> users = response.jsonPath().getList("users");
-        Assert.assertEquals(users.size(), 1, ValidationMessages.USER_EXACTLY_ONE_USER_RETURNED.getMessage());
-        Assert.assertEquals(users.get(0).get("username"), TEST_USER_DTO.getUsername(), ValidationMessages.USER_USERNAME_SHOULD_MATCH.getMessage());
+        UsersResponseDTO usersResponse = response.as(UsersResponseDTO.class);
+        Assert.assertEquals(usersResponse.getUsers().size(), 1, ValidationMessages.USER_EXACTLY_ONE_USER_RETURNED.getMessage());
+        Assert.assertEquals(usersResponse.getUsers().get(0).getUsername(), TEST_USER_DTO.getUsername(), ValidationMessages.USER_USERNAME_SHOULD_MATCH.getMessage());
     }
 
     @Test
@@ -122,10 +120,12 @@ public class UserTests extends BaseTest {
 
         DummyJsonRestUtils.assertStatusCode(response, 201);
 
-        Assert.assertEquals(response.jsonPath().getString("firstName"), newUserDTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getString("lastName"), newUserDTO.getLastName(), ValidationMessages.USER_LAST_NAME_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getInt("age"), newUserDTO.getAge(), ValidationMessages.USER_AGE_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getString("role"), newUserDTO.getRole(), ValidationMessages.USER_ROLE_SHOULD_MATCH.getMessage());
+        UserDTO user = response.as(UserDTO.class);
+
+        Assert.assertEquals(user.getFirstName(), newUserDTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getLastName(), newUserDTO.getLastName(), ValidationMessages.USER_LAST_NAME_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getAge(), newUserDTO.getAge(), ValidationMessages.USER_AGE_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getRole(), newUserDTO.getRole(), ValidationMessages.USER_ROLE_SHOULD_MATCH.getMessage());
     }
 
     @Test
@@ -140,11 +140,13 @@ public class UserTests extends BaseTest {
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
-        Assert.assertEquals(response.jsonPath().getString("firstName"), updateUserDTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getString("lastName"), updateUserDTO.getLastName(), ValidationMessages.USER_LAST_NAME_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getString("maidenName"), updateUserDTO.getMaidenName(), ValidationMessages.USER_MAIDEN_NAME_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getInt("age"), updateUserDTO.getAge(), ValidationMessages.USER_AGE_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getString("username"), updateUserDTO.getUsername(), ValidationMessages.USER_USERNAME_SHOULD_MATCH.getMessage());
+        UserDTO user = response.as(UserDTO.class);
+
+        Assert.assertEquals(user.getFirstName(), updateUserDTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getLastName(), updateUserDTO.getLastName(), ValidationMessages.USER_LAST_NAME_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getMaidenName(), updateUserDTO.getMaidenName(), ValidationMessages.USER_MAIDEN_NAME_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getAge(), updateUserDTO.getAge(), ValidationMessages.USER_AGE_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getUsername(), updateUserDTO.getUsername(), ValidationMessages.USER_USERNAME_SHOULD_MATCH.getMessage());
     }
 
     @Test
@@ -172,9 +174,11 @@ public class UserTests extends BaseTest {
 
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
-        Assert.assertEquals(response.jsonPath().getInt("id"), TEST_USER.getId(), ValidationMessages.USER_ID_SHOULD_MATCH.getMessage());
-        Assert.assertEquals(response.jsonPath().getString("firstName"), TEST_USER_DTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
-        Assert.assertTrue(response.jsonPath().getBoolean("isDeleted")); // should return true
+        UserDTO user = response.as(UserDTO.class);
+
+        Assert.assertEquals(user.getId(), TEST_USER.getId(), ValidationMessages.USER_ID_SHOULD_MATCH.getMessage());
+        Assert.assertEquals(user.getFirstName(), TEST_USER_DTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
+        Assert.assertTrue(user.isDeleted(), ValidationMessages.USER_SHOULD_BE_MARKED_AS_DELETED.getMessage());
     }
 
     @Test
@@ -192,7 +196,7 @@ public class UserTests extends BaseTest {
         UserDTO user = response.as(UserDTO.class);
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(response.jsonPath().getInt("id"), TEST_USER.getId(), ValidationMessages.USER_ID_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(user.getId(), TEST_USER.getId(), ValidationMessages.USER_ID_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(user.getFirstName(), TEST_USER_DTO.getFirstName(), ValidationMessages.USER_FIRST_NAME_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(user.getLastName(), TEST_USER_DTO.getLastName(), ValidationMessages.USER_LAST_NAME_SHOULD_MATCH.getMessage());
         softAssert.assertEquals(user.getMaidenName(), TEST_USER_DTO.getMaidenName(), ValidationMessages.USER_MAIDEN_NAME_SHOULD_MATCH.getMessage());

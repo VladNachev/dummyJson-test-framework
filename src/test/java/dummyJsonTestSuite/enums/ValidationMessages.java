@@ -23,6 +23,7 @@ public enum ValidationMessages {
     USER_WEIGHT_SHOULD_MATCH("User weight should match."),
     USER_EYE_COLOR_SHOULD_MATCH("User eye color should match."),
     USER_ROLE_SHOULD_MATCH("User role should match."),
+    USER_SHOULD_BE_MARKED_AS_DELETED("User should be marked as deleted."),
     USER_EXACTLY_ONE_USER_RETURNED("Expected exactly one user in search results."),
     PRODUCTS_LIST_SHOULD_BE_PRESENT("Products list should be present in the response."),
     PRODUCTS_LIST_SHOULD_NOT_BE_EMPTY("Products list should not be empty."),
