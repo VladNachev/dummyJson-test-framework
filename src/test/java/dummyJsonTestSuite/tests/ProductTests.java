@@ -57,7 +57,7 @@ public class ProductTests extends BaseTest {
     public void getSingleProductShouldMatchProductCatalog() {
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                DummyJsonConfig.PRODUCTS_ENDPOINT + "/" + EXPECTED_PRODUCT.getId(),
+                DummyJsonConfig.productByIdEndpoint(EXPECTED_PRODUCT.getId()),
                 "GET",
                 DummyJsonConfig.authorizedJsonHeaders(accessToken),
                 null
@@ -66,18 +66,18 @@ public class ProductTests extends BaseTest {
         DummyJsonRestUtils.assertStatusCode(response, 200);
 
 
+        ProductDTO productDTO = response.as(ProductDTO.class);
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertEquals(response.jsonPath().getInt("id"), EXPECTED_PRODUCT.getId(), ValidationMessages.PRODUCT_ID_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getString("title"), EXPECTED_PRODUCT_DTO.getTitle(), ValidationMessages.PRODUCT_TITLE_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getString("description"), EXPECTED_PRODUCT_DTO.getDescription(), ValidationMessages.PRODUCT_DESCRIPTION_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getString("category"), EXPECTED_PRODUCT_DTO.getCategory(), ValidationMessages.PRODUCT_CATEGORY_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getDouble("price"), EXPECTED_PRODUCT_DTO.getPrice(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_PRICE_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getDouble("discountPercentage"), EXPECTED_PRODUCT_DTO.getDiscountPercentage(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_DISCOUNT_PERCENTAGE_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getDouble("rating"), EXPECTED_PRODUCT_DTO.getRating(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_RATING_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getInt("stock"), EXPECTED_PRODUCT_DTO.getStock(), ValidationMessages.PRODUCT_STOCK_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getString("brand"), EXPECTED_PRODUCT_DTO.getBrand(), ValidationMessages.PRODUCT_BRAND_SHOULD_MATCH.getMessage());
-        softAssert.assertEquals(response.jsonPath().getString("sku"), EXPECTED_PRODUCT.getSku(), ValidationMessages.PRODUCT_SKU_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getTitle(), EXPECTED_PRODUCT_DTO.getTitle(), ValidationMessages.PRODUCT_TITLE_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getDescription(), EXPECTED_PRODUCT_DTO.getDescription(), ValidationMessages.PRODUCT_DESCRIPTION_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getCategory(), EXPECTED_PRODUCT_DTO.getCategory(), ValidationMessages.PRODUCT_CATEGORY_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getPrice(), EXPECTED_PRODUCT_DTO.getPrice(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_PRICE_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getDiscountPercentage(), EXPECTED_PRODUCT_DTO.getDiscountPercentage(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_DISCOUNT_PERCENTAGE_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getRating(), EXPECTED_PRODUCT_DTO.getRating(), DECIMAL_TOLERANCE, ValidationMessages.PRODUCT_RATING_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getStock(), EXPECTED_PRODUCT_DTO.getStock(), ValidationMessages.PRODUCT_STOCK_SHOULD_MATCH.getMessage());
+        softAssert.assertEquals(productDTO.getBrand(), EXPECTED_PRODUCT_DTO.getBrand(), ValidationMessages.PRODUCT_BRAND_SHOULD_MATCH.getMessage());
 
         softAssert.assertAll();
     }
@@ -87,7 +87,7 @@ public class ProductTests extends BaseTest {
 
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                DummyJsonConfig.PRODUCTS_ENDPOINT + "/search?q=Palette",
+                DummyJsonConfig.productSearchEndpoint("Palette"),
                 DummyJsonConfig.GET,
                 DummyJsonConfig.authorizedJsonHeaders(accessToken),
                 null
@@ -110,7 +110,7 @@ public class ProductTests extends BaseTest {
 
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                DummyJsonConfig.PRODUCTS_ENDPOINT + "/add",
+                DummyJsonConfig.productAddEndpoint(),
                 DummyJsonConfig.POST,
                 DummyJsonConfig.authorizedJsonHeaders(accessToken),
                 newProduct
@@ -133,7 +133,7 @@ public class ProductTests extends BaseTest {
 
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                DummyJsonConfig.PRODUCTS_ENDPOINT + "/" + EXPECTED_PRODUCT.getId(),
+                DummyJsonConfig.productByIdEndpoint(EXPECTED_PRODUCT.getId()),
                 DummyJsonConfig.PUT,
                 DummyJsonConfig.authorizedJsonHeaders(accessToken),
                 updateProduct
@@ -151,7 +151,7 @@ public class ProductTests extends BaseTest {
     public void deleteExistingProduct() {
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                DummyJsonConfig.PRODUCTS_ENDPOINT + "/" + EXPECTED_PRODUCT.getId(),
+                DummyJsonConfig.productByIdEndpoint(EXPECTED_PRODUCT.getId()),
                 DummyJsonConfig.DELETE,
                 DummyJsonConfig.authorizedJsonHeaders(accessToken),
                 null
@@ -165,14 +165,14 @@ public class ProductTests extends BaseTest {
 
         Assert.assertEquals(response.jsonPath().getInt("id"), EXPECTED_PRODUCT.getId());
         Assert.assertEquals(response.jsonPath().getString("title"), EXPECTED_PRODUCT_DTO.getTitle());
-        Assert.assertTrue(response.jsonPath().getBoolean("isDeleted"), "true");
+        Assert.assertTrue(response.jsonPath().getBoolean("isDeleted")); // should return true
     }
 
     @Test
     public void deleteNonExistingProductShouldReturnNotFound() {
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                DummyJsonConfig.PRODUCTS_ENDPOINT + "/999",
+                DummyJsonConfig.productByIdEndpoint(999),
                 DummyJsonConfig.DELETE,
                 DummyJsonConfig.authorizedJsonHeaders(accessToken),
                 null
@@ -193,7 +193,7 @@ public class ProductTests extends BaseTest {
 
         Response response = DummyJsonRestUtils.sendRequest(
                 DummyJsonConfig.BASE_URL,
-                DummyJsonConfig.PRODUCTS_ENDPOINT + "/999",
+                DummyJsonConfig.productByIdEndpoint(999),
                 DummyJsonConfig.PUT,
                 DummyJsonConfig.authorizedJsonHeaders(accessToken),
                 updateProduct

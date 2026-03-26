@@ -18,12 +18,14 @@ public final class DummyJsonConfig {
     public static final String PUT = "PUT";
     public static final String DELETE = "DELETE";
 
+    // Auth constants
     public static final String USERNAME = "emilys";
     public static final String PASSWORD = "emilyspass";
 
     private DummyJsonConfig() {
     }
 
+    // Headers
     public static Map<String, String> jsonHeaders() {
         return Map.of(
                 "Content-Type", "application/json",
@@ -37,5 +39,29 @@ public final class DummyJsonConfig {
                 "Accept", "application/json",
                 "Authorization", "Bearer " + accessToken
         );
+    }
+
+    public static String productByIdEndpoint(int id) {
+        return PRODUCTS_ENDPOINT + "/" + id;
+    }
+
+    public static String productSearchEndpoint(String query) {
+        return PRODUCTS_ENDPOINT + "/search?q=" + query;
+    }
+
+    public static String productAddEndpoint() {
+        return PRODUCTS_ENDPOINT + "/add";
+    }
+
+    public static String userByIdEndpoint(int id) {
+        return USERS_ENDPOINT + "/" + id;
+    }
+
+    public static String userSearchEndpoint(String query) {
+        return USERS_ENDPOINT + "/search?q=" + query;
+    }
+
+    public static String userAddEndpoint() {
+        return USERS_ENDPOINT + "/add";
     }
 }
