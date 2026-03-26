@@ -1,6 +1,7 @@
 package dummyjsontestsuite.utils;
 
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 import java.util.Map;
 
@@ -15,12 +16,18 @@ public final class DummyJsonRestUtils {
     }
 
     public static Response sendRequest(String baseUrl, String endpoint, String method, Map<String, String> headers, Object body) {
+        RequestSpecification request = given()
+                .baseUri(baseUrl)
+                .headers(headers)
+                .log().all();
+
+        if (body != null) {
+            request.body(body);
+        }
+
         switch (method.toUpperCase()) {
             case "GET":
-                return given()
-                        .baseUri(baseUrl)
-                        .headers(headers)
-                        .log().all()
+                return request
                         .when()
                         .get(endpoint)
                         .then()
@@ -28,26 +35,25 @@ public final class DummyJsonRestUtils {
                         .extract()
                         .response();
             case "POST":
-                if (body == null) {
-                    return given()
-                            .baseUri(baseUrl)
-                            .headers(headers)
-                            .log().all()
-                            .when()
-                            .post(endpoint)
-                            .then()
-                            .log().all()
-                            .extract()
-                            .response();
-                }
-
-                return given()
-                        .baseUri(baseUrl)
-                        .headers(headers)
-                        .body(body)
-                        .log().all()
+                return request
                         .when()
                         .post(endpoint)
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response();
+            case "PUT":
+                return request
+                        .when()
+                        .put(endpoint)
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response();
+            case "DELETE":
+                return request
+                        .when()
+                        .delete(endpoint)
                         .then()
                         .log().all()
                         .extract()
