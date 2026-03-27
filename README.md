@@ -1,4 +1,4 @@
-![CI](https://github.com/VladNachev/dummyJson-test-framework/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/VladNachev/dummyJson-test-framework/actions/workflows/ci.yml/badge.svg?branch=master)
 
 # Backend API Test Automation Framework
 
@@ -10,6 +10,7 @@ It is designed as a portfolio project to demonstrate:
 - DTO-based request and response handling
 - scalable test organization
 - logging and reporting
+- CI integration
 - validation against live API responses
 
 The framework currently targets the public [DummyJSON](https://dummyjson.com/) API and covers multiple resource domains such as products, users, posts, recipes, and comments.
@@ -24,27 +25,57 @@ The framework currently targets the public [DummyJSON](https://dummyjson.com/) A
 - SLF4J
 - Logback
 - ExtentReports
+- GitHub Actions
+
+## CI Integration
+
+Continuous Integration is configured with GitHub Actions.
+
+The workflow file is located at:
+
+```text
+.github/workflows/ci.yml
+```
+
+The pipeline runs automatically on:
+- push to `master`
+- pull requests targeting `master`
+
+What the workflow does:
+- checks out the repository
+- sets up JDK 21
+- caches Maven dependencies
+- runs the full TestNG suite with Maven
+
+Workflow command:
+
+```bash
+mvn -B test -Dsurefire.suiteXmlFiles=testng.xml
+```
 
 ## Project Structure
 
 ```text
 be_automation
-├── img
-├── src
-│   └── test
-│       ├── java
-│       │   └── dummyjsontestsuite
-│       │       ├── auth
-│       │       ├── config
-│       │       ├── dto
-│       │       ├── enums
-│       │       ├── reporting
-│       │       ├── tests
-│       │       └── utils
-│       └── resources
-│           └── logback-test.xml
-├── pom.xml
-└── testng.xml
+|-- .github
+|   `-- workflows
+|       `-- ci.yml
+|-- img
+|-- src
+|   `-- test
+|       |-- java
+|       |   `-- dummyjsontestsuite
+|       |       |-- auth
+|       |       |-- config
+|       |       |-- dto
+|       |       |-- enums
+|       |       |-- reporting
+|       |       |-- tests
+|       |       `-- utils
+|       `-- resources
+|           `-- logback-test.xml
+|-- pom.xml
+`-- testng.xml
 ```
 
 ### Package Responsibilities
@@ -158,7 +189,7 @@ target/extent-reports/dummyjson-suite-report.html
 
 ![Extent Report Dashboard](img/extentreportDashboard.png)
 
-### Chart view
+### Chart View
 
 ![Extent Report Dashboard Resized](img/resized_dashboard.png)
 
@@ -182,7 +213,7 @@ You can run:
 - individual test classes
 - individual test methods
 - the full `testng.xml` suite
-- 
+
 ### Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests if you find bugs or have suggestions for improvements.
+Contributions are welcome. Feel free to open issues or submit pull requests if you find bugs or have suggestions for improvements.
