@@ -4,7 +4,7 @@
 
 This project is a backend API automation framework built with Java, Maven, TestNG, and Rest Assured.
 
-It is designed as a portfolio project to demonstrate:
+It demonstrates best practices in API test automation, including:
 - API test design and execution
 - reusable framework structure
 - DTO-based request and response handling
