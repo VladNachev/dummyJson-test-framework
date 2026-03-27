@@ -1,3 +1,5 @@
+![CI](https://github.com/VladNachev/dummyJson-test-framework/actions/workflows/ci.yml/badge.svg)
+
 # Backend API Test Automation Framework
 
 This project is a backend API automation framework built with Java, Maven, TestNG, and Rest Assured.
