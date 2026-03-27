@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DummyJson Test Suite" verbose="1" parallel="false">
+    <test name="All Tests">
+        <classes>
+            <class name="dummyjsontestsuite.tests.AuthTests"/>
+            <class name="dummyjsontestsuite.tests.ProductTests"/>
+            <class name="dummyjsontestsuite.tests.UserTests"/>
+            <class name="dummyjsontestsuite.tests.PostTests"/>
+            <class name="dummyjsontestsuite.tests.RecipeTests"/>
+            <class name="dummyjsontestsuite.tests.CommentTests"/>
+        </classes>
+    </test>
+</suite>
