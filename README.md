@@ -46,12 +46,19 @@ What the workflow does:
 - sets up JDK 21
 - caches Maven dependencies
 - runs the full TestNG suite with Maven
+- uploads the generated Extent report as a workflow artifact
 
 Workflow command:
 
 ```bash
 mvn -B test -Dsurefire.suiteXmlFiles=testng.xml
 ```
+
+Artifact upload:
+
+- artifact name: `extent-report`
+- artifact source: `target/extent-reports/`
+- uploaded with `if: always()` so the report is still available even when tests fail
 
 ## Project Structure
 
@@ -182,6 +189,10 @@ Report location:
 ```text
 target/extent-reports/dummyjson-suite-report.html
 ```
+
+CI integration for reporting:
+- the same Extent report directory is uploaded from GitHub Actions as the `extent-report` artifact
+- this allows the HTML report to be downloaded directly from each workflow run
 
 ## Extent Report Screenshots
 
